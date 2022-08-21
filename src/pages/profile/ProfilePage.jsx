@@ -5,7 +5,7 @@ import styles from './ProfilePage.module.css';
 class ProfilePage extends React.Component {
     render() {
         return (
-            <div className={styles.profile}>
+            <div data-testid="profile-page" className={styles.profile}>
                 <h1>Profile Page</h1>
             </div>
         )

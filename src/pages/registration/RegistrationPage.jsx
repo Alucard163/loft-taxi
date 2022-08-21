@@ -12,7 +12,7 @@ class RegistrationPage extends React.Component {
 
     render() {
         return (
-            <div className={styles.registration}>
+            <div data-testid="registration-page" className={styles.registration}>
                 <Aside />
                 <Auth {...this.props}/>
             </div>

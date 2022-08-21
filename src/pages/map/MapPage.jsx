@@ -6,7 +6,7 @@ class MapPage extends React.Component {
 
     render() {
         return <>
-            <div className={styles['map']}>
+            <div data-testid="profile-page" className={styles['map']}>
                 <h1>Map page</h1>
             </div>
         </>

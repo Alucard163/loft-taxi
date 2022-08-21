@@ -11,7 +11,7 @@ class LoginPage extends React.Component {
 
     render() {
         return <>
-            <div className={styles.login}>
+            <div data-testid="login-page" className={styles.login}>
                 <Aside />
                 <Auth {...this.props}/>
             </div>
