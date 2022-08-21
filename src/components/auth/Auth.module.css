@@ -1,0 +1,52 @@
+.auth {
+    width: 66%;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    justify-content: center;
+    background-color: #000;
+    background-image: url(./img/bg-auth.jpg);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 580px;
+    padding: 56px 0;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.wrap {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 112px;
+}
+
+.in {
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 55px;
+}
+
+p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #828282;
+}
+
+.link {
+    color: #FDBF5A;
+    cursor: pointer;
+}
