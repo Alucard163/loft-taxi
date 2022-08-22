@@ -14,6 +14,9 @@ class Header extends React.Component {
     ];
 
     isActive = (key) => key === this.props.page;
+    activeClass = (key) => {
+        return this.isActive(key) ? `${styles.isActive}` : '';
+    }
 
     render() {
         const { setPage } =  this.props;
@@ -24,7 +27,7 @@ class Header extends React.Component {
                 <nav>
                     <ul className={styles['Nav']}>
                         {this.links.map(item => (
-                            <li key={item.id} className={[styles.link, ...(this.isActive(item.key) ? styles.isActive : [])].join(' ')}>
+                            <li key={item.id} className={`${styles.link} ${this.activeClass(item.key)}`}>
                                 <div onClick={() => setPage(item.key)}>
                                     {item.text}
                                 </div>

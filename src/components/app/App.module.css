@@ -1,5 +1,19 @@
 .app {
-  background-color: #1C1A19;
-  width: 100vw;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
   height: 100vh;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
 }

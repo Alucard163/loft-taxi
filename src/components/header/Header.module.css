@@ -1,4 +1,5 @@
 .header {
+    position: relative;
     display: flex;
     padding: 25px;
     width: 100%;
@@ -6,6 +7,8 @@
     align-items: center;
     background: #1C1A19;
     z-index: 3;
+    height: 102px;
+    overflow: hidden;
 }
 
 .logo {
@@ -15,10 +18,6 @@
 
 .Nav {
     display: flex;
-}
-
-.isActive {
-    color: #FDBF5A;
 }
 
 .link {
@@ -32,6 +31,10 @@
     list-style-type: none;
     margin-right: 30px;
     cursor: pointer;
+}
+
+li .isActive {
+    color: #FDBF5A;
 }
 
 .link a {

@@ -14,7 +14,7 @@ class RegistrationPage extends React.Component {
         return (
             <div data-testid="registration-page" className={styles.registration}>
                 <Aside />
-                <Auth {...this.props}/>
+                <Auth setPage={this.props.setPage} page={this.props.page}/>
             </div>
         )
     }

@@ -10,12 +10,12 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        return <>
+        return (
             <div data-testid="login-page" className={styles.login}>
                 <Aside />
-                <Auth {...this.props}/>
+                <Auth setPage={this.props.setPage} page={this.props.page}/>
             </div>
-        </>
+        )
     }
 }
 

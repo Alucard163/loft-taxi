@@ -5,11 +5,11 @@ import styles from './MapPage.module.css'
 class MapPage extends React.Component {
 
     render() {
-        return <>
+        return (
             <div data-testid="profile-page" className={styles['map']}>
                 <h1>Map page</h1>
             </div>
-        </>
+        )
     }
 }
 

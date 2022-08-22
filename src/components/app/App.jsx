@@ -26,13 +26,13 @@ class App extends React.Component {
 
       render() {
         const { page } = this.state;
-        const showHeader = this.state.page === 'map' || this.state.page === 'profile'
+        const showHeader = page === 'map' || page === 'profile'
         const CurrentPage = PAGES[page];
 
         return (
             <div className={styles.app}>
-                {showHeader && <Header setPage={this.setPage} {...this.state} />}
-                <CurrentPage setPage={this.setPage} {...this.props} {...this.state}/>
+                {showHeader && <Header setPage={this.setPage} page={this.state.page} />}
+                <CurrentPage setPage={this.setPage} page={this.state.page}/>
             </div>
             )
       };
