@@ -31,8 +31,8 @@ class App extends React.Component {
 
         return (
             <div className={styles.app}>
-                {showHeader && <Header setPage={this.setPage} page={this.state.page} />}
-                <CurrentPage setPage={this.setPage} page={this.state.page}/>
+                {showHeader && <Header setPage={this.setPage} page={page} />}
+                <CurrentPage setPage={this.setPage} page={page}/>
             </div>
             )
       };

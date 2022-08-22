@@ -11,7 +11,7 @@ class Auth extends React.Component {
     }
 
     render() {
-        const { setPage } =  this.props;
+        const { setPage, page } =  this.props;
         const { isLoginPage } = this.state;
 
         return (
@@ -21,7 +21,7 @@ class Auth extends React.Component {
                         <h4 className={styles.in}>
                             {isLoginPage ? 'Войти' : 'Зарегистрироваться'}
                         </h4>
-                        {isLoginPage ? <LoginForm setPage={this.props.setPage} page={this.props.page}/> : <RegisterForm setPage={this.props.setPage} page={this.props.page}/> }
+                        {isLoginPage ? <LoginForm setPage={setPage} page={page}/> : <RegisterForm setPage={setPage} page={page}/> }
                         <div>
                             {isLoginPage ?
                                 <p>Новый пользователь? <span className={styles.link} onClick={() => setPage('register')} >Зарегистрируйтесь</span></p>

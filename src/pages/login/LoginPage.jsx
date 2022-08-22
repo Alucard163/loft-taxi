@@ -10,10 +10,13 @@ class LoginPage extends React.Component {
     }
 
     render() {
+        const { setPage } =  this.props;
+        const { page } = this.props;
+
         return (
             <div data-testid="login-page" className={styles.login}>
                 <Aside />
-                <Auth setPage={this.props.setPage} page={this.props.page}/>
+                <Auth setPage={setPage} page={page}/>
             </div>
         )
     }
