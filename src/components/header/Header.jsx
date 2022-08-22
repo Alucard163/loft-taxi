@@ -1,4 +1,5 @@
 import React from "react";
+import { links } from "../../utils/constants/header";
 
 import styles from './Header.module.css';
 import logo from '../../assets/svg/logo.svg';
@@ -7,11 +8,6 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
     }
-    links = [
-        {href: "/map", key: "map", text: "Карта", id: 0},
-        {href: "/profile", key: "profile", text: "Профиль", id: 1},
-        {href: "/login", key: "login", text: "Выйти", id: 2 }
-    ];
 
     isActive = (key) => key === this.props.page;
     activeClass = (key) => {
@@ -26,7 +22,7 @@ class Header extends React.Component {
                 <img src={logo} alt="логотип такси" className={styles['logo']} />
                 <nav>
                     <ul className={styles['Nav']}>
-                        {this.links.map(item => (
+                        {links.map(item => (
                             <li key={item.id} className={`${styles.link} ${this.activeClass(item.key)}`}>
                                 <div onClick={() => setPage(item.key)}>
                                     {item.text}

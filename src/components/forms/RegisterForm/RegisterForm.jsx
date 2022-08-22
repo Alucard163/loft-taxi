@@ -4,9 +4,8 @@ import styles from './RegisterForm.module.css'
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { email: "", name: "", password: "" };
     }
-
-    state = { email: "", name: "", password: "" };
 
     handleSubmit = event => {
         event.preventDefault();
