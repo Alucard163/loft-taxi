@@ -1,6 +1,8 @@
 import React from "react";
 import styles from './App.module.css';
 
+import { authHOC } from "../../context/AuthContext";
+
 import Header from "../header";
 import LoginPage from "../../pages/login";
 import RegistrationPage from "../../pages/registration";
@@ -21,7 +23,9 @@ class App extends React.Component {
     }
 
     setPage = (page) => {
-        this.setState({ page })
+        this.context.isLoggedIn === false
+            ? this.setState({ page: 'login' })
+            : this.setState({ page })
     }
 
       render() {
@@ -38,4 +42,4 @@ class App extends React.Component {
       };
 }
 
-export default App;
+export default authHOC(App);

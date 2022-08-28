@@ -1,3 +1,3 @@
-import RegisterForm from "./RegisterForm";
+import { RegisterFormWithAuth } from "./RegisterForm";
 
-export default RegisterForm;
+export default RegisterFormWithAuth;

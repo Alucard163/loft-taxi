@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import Aside from "../../components/aside";
 import Auth from "../../components/auth";
 
@@ -9,9 +11,13 @@ class LoginPage extends React.Component {
         super(props);
     }
 
+    static propTypes = {
+        page: PropTypes.string,
+        setPage: PropTypes.func,
+    }
+
     render() {
-        const { setPage } =  this.props;
-        const { page } = this.props;
+        const { setPage, page } =  this.props;
 
         return (
             <div data-testid="login-page" className={styles.login}>

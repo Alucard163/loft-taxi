@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
+
 import styles from './Auth.module.css';
 
 class Auth extends React.Component {
@@ -10,19 +12,27 @@ class Auth extends React.Component {
         this.state = { isLoginPage: props.page === 'login'}
     }
 
+    static propTypes = {
+        page: PropTypes.string,
+        setPage: PropTypes.func,
+    }
+
     render() {
         const { setPage, page } =  this.props;
         const { isLoginPage } = this.state;
 
         return (
-            <div className={styles.auth}>
+            <div data-testid="auth-component" className={styles.auth}>
                 <div className={styles.container}>
                     <div className={styles.wrap}>
                         <h4 className={styles.in}>
                             {isLoginPage ? 'Войти' : 'Зарегистрироваться'}
                         </h4>
-                        {isLoginPage ? <LoginForm setPage={setPage} page={page}/> : <RegisterForm setPage={setPage} page={page}/> }
-                        <div>
+                        {isLoginPage ?
+                            <LoginForm setPage={setPage} page={page}/>
+                            : <RegisterForm setPage={setPage} page={page}/>
+                        }
+                        <div data-testid="auth-text">
                             {isLoginPage ?
                                 <p>Новый пользователь? <span className={styles.link} onClick={() => setPage('register')} >Зарегистрируйтесь</span></p>
                                 : <p>Уже зарегистрированы? <span className={styles.link} onClick={() => setPage('login')}>Войти</span></p>
