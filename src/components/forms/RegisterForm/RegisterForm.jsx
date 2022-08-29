@@ -63,6 +63,7 @@ function RegisterForm(props) {
             <FormControl
                 variant="standard"
                 fullWidth
+                required
                 className={styles.formItem}
             >
                 <InputLabel htmlFor="form-name">Как вас зовут?*</InputLabel>
@@ -71,6 +72,7 @@ function RegisterForm(props) {
                     type="text"
                     name="name"
                     placeholder="Петр Александрович"
+                    required
                     className={styles.input}
                     value={name}
                     onChange={e=> setName(e.target.value)}
@@ -79,6 +81,7 @@ function RegisterForm(props) {
             <FormControl
                 variant="standard"
                 fullWidth
+                required
                 className={styles.formItem}
             >
                 <InputLabel htmlFor="form-password">Придумайте пароль*</InputLabel>
@@ -87,6 +90,7 @@ function RegisterForm(props) {
                     type="password"
                     name="password"
                     placeholder="test"
+                    required
                     className={styles.input}
                     value={password}
                     onChange={e => setPassword(e.target.value)}

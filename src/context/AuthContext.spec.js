@@ -12,7 +12,7 @@ const customRender = (ui, {providerProps, ...renderOptions}) => {
 describe('AuthContext', () => {
     it('check auth context', () => {
         const providerProps = {
-            isLoggedIn: 'true',
+            someKey: 'someValue',
         }
         customRender(
             <AuthContext.Consumer>
