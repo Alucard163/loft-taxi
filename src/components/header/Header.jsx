@@ -13,11 +13,6 @@ class Header extends React.Component {
 
     static contextType = AuthContext;
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     isActive = (key) => key === this.props.page;
     activeClass = (key) => {
         return this.isActive(key) ? `${styles.isActive}` : '';
@@ -52,6 +47,11 @@ class Header extends React.Component {
             </header>
         )
     }
+}
+
+Header.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default Header;

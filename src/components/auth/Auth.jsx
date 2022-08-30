@@ -12,11 +12,6 @@ class Auth extends React.Component {
         this.state = { isLoginPage: props.page === 'login'}
     }
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     render() {
         const { setPage, page } =  this.props;
         const { isLoginPage } = this.state;
@@ -43,6 +38,11 @@ class Auth extends React.Component {
             </div>
         )
     }
+}
+
+Auth.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default Auth;

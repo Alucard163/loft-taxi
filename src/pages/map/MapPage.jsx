@@ -10,11 +10,6 @@ class MapPage extends React.Component {
         super(props);
     }
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     render() {
         return (
             <div data-testid="map-page" className={styles['map']}>
@@ -22,6 +17,11 @@ class MapPage extends React.Component {
             </div>
         )
     }
+}
+
+MapPage.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default MapPage;

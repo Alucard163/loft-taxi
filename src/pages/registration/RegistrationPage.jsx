@@ -11,11 +11,6 @@ class RegistrationPage extends React.Component {
         super(props);
     }
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     render() {
         const { setPage } =  this.props;
         const { page } = this.props;
@@ -27,6 +22,11 @@ class RegistrationPage extends React.Component {
             </div>
         )
     }
+}
+
+RegistrationPage.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default RegistrationPage

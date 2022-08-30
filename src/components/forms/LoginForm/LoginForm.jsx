@@ -1,7 +1,9 @@
 import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { authHOC, AuthContext } from '../../../context/AuthContext';
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+
+import { authHOC, AuthContext } from '../../../context/AuthContext';
+
 import styles from './LoginForm.module.css'
 
 function LoginForm(props) {

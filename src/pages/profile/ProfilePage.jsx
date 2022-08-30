@@ -8,11 +8,6 @@ class ProfilePage extends React.Component {
         super(props);
     }
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     render() {
         return (
             <div data-testid="profile-page" className={styles.profile}>
@@ -20,6 +15,11 @@ class ProfilePage extends React.Component {
             </div>
         )
     }
+}
+
+ProfilePage.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default ProfilePage;

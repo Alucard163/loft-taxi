@@ -11,21 +11,22 @@ class LoginPage extends React.Component {
         super(props);
     }
 
-    static propTypes = {
-        page: PropTypes.string,
-        setPage: PropTypes.func,
-    }
-
     render() {
         const { setPage, page } =  this.props;
 
         return (
             <div data-testid="login-page" className={styles.login}>
+                {process.env.MAPBOX_ACCESS_TOKEN}
                 <Aside />
                 <Auth setPage={setPage} page={page}/>
             </div>
         )
     }
+}
+
+LoginPage.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default LoginPage;
