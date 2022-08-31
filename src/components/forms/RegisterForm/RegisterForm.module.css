@@ -4,21 +4,8 @@
     margin-bottom: 25px;
 }
 
-label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+input {
     border-bottom: 2px solid #E4E4E4;
-}
-
-label > * {
-    margin: 5px 0;
-}
-
-label > span {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
 }
 
 .input {
@@ -29,20 +16,11 @@ label > span {
     color: #828282;
 }
 
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-.input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset;
-    -webkit-text-fill-color: #828282;
-}
-
 .submit {
-    margin: 40px 0 25px;
-    cursor: pointer;
+    margin: 50px 0 33px;
 }
 
-.submit input {
+.submit button {
     padding: 16px 0;
     background: #FDBF5A;
     color: #000000;

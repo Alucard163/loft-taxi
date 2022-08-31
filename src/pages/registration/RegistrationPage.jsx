@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Aside from "../../components/aside";
 import Auth from "../../components/auth";
@@ -21,6 +22,11 @@ class RegistrationPage extends React.Component {
             </div>
         )
     }
+}
+
+RegistrationPage.propTypes = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
 }
 
 export default RegistrationPage

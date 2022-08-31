@@ -1,68 +1,113 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
+import PropTypes from "prop-types";
+import { authHOC, AuthContext } from '../../../context/AuthContext';
+import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+
 import styles from './RegisterForm.module.css'
 
-class RegisterForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { email: "", name: "", password: "" };
-    }
+function RegisterForm(props) {
+    const context = useContext(AuthContext);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
 
-    handleSubmit = event => {
+
+    useEffect(() => {
+        if (context.isLoggedIn) {
+            props.setPage('map')
+        }
+    });
+
+    const handleSubmit = event => {
         event.preventDefault();
+        context.logIn(email, password);
+        handleReset();
     };
 
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
-
-    render() {
-        const { email, name, password } = this.state;
-        const { setPage } =  this.props;
-
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div className={styles.formItem}>
-                    <label>
-                        <span>Email*</span>
-                        <input
-                            type="text"
-                            name="email"
-                            className={styles.input}
-                            value={email}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                </div>
-                <div className={styles.formItem}>
-                    <label>
-                        <span>Как вас зовут?*</span>
-                        <input
-                            type="text"
-                            name="name"
-                            className={styles.input}
-                            value={name}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                </div>
-                <div className={styles.formItem}>
-                    <label>
-                        <span>Придумайте пароль*</span>
-                        <input
-                            type="text"
-                            name="password"
-                            className={styles.input}
-                            value={password}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                </div>
-                <div className={`${styles.formItem} ${styles.submit}`}>
-                    <input className={styles.input} type="submit" value="Зарегистрироваться" onClick={() => setPage('map')} />
-                </div>
-            </form>
-        );
+    const handleReset = e => {
+        setEmail('');
+        setPassword('');
+        setName('');
     }
+
+    const handleClick = () => {
+        context.logIn(email, password);
+        handleReset();
+    };
+
+    return (
+        <Box
+            component="form"
+            name="RegisterForm"
+            noValidate
+            autoComplete="off"
+            data-testid="register-form"
+            onSubmit={e => handleSubmit(e)}
+        >
+            <FormControl
+                variant="standard"
+                fullWidth
+                className={styles.formItem}
+            >
+                <InputLabel htmlFor="form-email">Email*</InputLabel>
+                <Input
+                    id="form-email"
+                    type="text"
+                    name="email"
+                    placeholder="test@test.com"
+                    className={styles.input}
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
+            </FormControl>
+            <FormControl
+                variant="standard"
+                fullWidth
+                required
+                className={styles.formItem}
+            >
+                <InputLabel htmlFor="form-name">Как вас зовут?*</InputLabel>
+                <Input
+                    id="form-name"
+                    type="text"
+                    name="name"
+                    placeholder="Петр Александрович"
+                    required
+                    className={styles.input}
+                    value={name}
+                    onChange={e=> setName(e.target.value)}
+                />
+            </FormControl>
+            <FormControl
+                variant="standard"
+                fullWidth
+                required
+                className={styles.formItem}
+            >
+                <InputLabel htmlFor="form-password">Придумайте пароль*</InputLabel>
+                <Input
+                    id="form-password"
+                    type="password"
+                    name="password"
+                    placeholder="test"
+                    required
+                    className={styles.input}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+            </FormControl>
+            <div className={`${styles.formItem} ${styles.submit}`}>
+                <Button fullWidth className={styles.input} onClick={() => handleClick()} >
+                    Зарегистрироваться
+                </Button>
+            </div>
+        </Box>
+    );
 }
 
-export default RegisterForm;
+RegisterForm.propsType = {
+    page: PropTypes.string,
+    setPage: PropTypes.func,
+}
+
+export const RegisterFormWithAuth = authHOC(RegisterForm);

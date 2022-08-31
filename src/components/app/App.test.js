@@ -1,13 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from "./App";
-
-test('renders app', () => {
-  render(<App />);
-  expect(screen.getByTestId('login-page')).toBeInTheDocument();
-  expect(screen.queryByTestId('registration-page')).not.toBeInTheDocument();
-  expect(screen.queryByTestId('map-page')).not.toBeInTheDocument();
-  expect(screen.queryByTestId('profile-page')).not.toBeInTheDocument();
-});
 
 jest.mock('../../components/header', () => ({ __esModule: true, default: () => <div>Header content</div> }))
 jest.mock('../../pages/login', () => ({ __esModule: true, default: () => <div>LoginPage content</div> }))
