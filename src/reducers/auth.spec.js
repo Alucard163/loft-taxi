@@ -2,6 +2,7 @@ import authReducer from "./auth";
 import { logIn, logOut, getToken } from '../actions';
 
 describe('auth reducer', () => {
+    // eslint-disable-next-line no-unused-vars
     let state;
 
     it('LOG_IN', () => {

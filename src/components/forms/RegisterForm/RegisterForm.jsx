@@ -1,29 +1,28 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { register } from "../../../actions";
 
-import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+import { Box, Button, FormControl, Input, InputLabel } from '@mui/material';
 
 import styles from './RegisterForm.module.css';
 import { Redirect } from "react-router-dom";
 
-function RegisterForm(props) {
+function RegisterForm(props, {useDispatchHook=useDispatch}) {
     const { isLoggedIn } = props;
+    const dispatch = useDispatchHook();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [surname, setSurName] = useState('');
     const [password, setPassword] = useState('');
 
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            return <Redirect to='/map' />
-        }
-    });
+    if (isLoggedIn) {
+        return <Redirect to='/map' />
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
-        props.register(email, password, name)
+        dispatch(register(email, password, name, surname));
         handleReset();
     };
 
@@ -31,9 +30,11 @@ function RegisterForm(props) {
         setEmail('');
         setPassword('');
         setName('');
+        setSurName('');
     }
 
     const handleClick = () => {
+        dispatch(register(email, password, name, surname));
         handleReset();
     };
 
@@ -73,11 +74,29 @@ function RegisterForm(props) {
                     id="form-name"
                     type="text"
                     name="name"
-                    placeholder="Петр Александрович"
+                    placeholder="Петр"
                     required
                     className={styles.input}
                     value={name}
                     onChange={e=> setName(e.target.value)}
+                />
+            </FormControl>
+            <FormControl
+                variant="standard"
+                fullWidth
+                required
+                className={styles.formItem}
+            >
+                <InputLabel htmlFor="form-surname">Ваша фамилия?*</InputLabel>
+                <Input
+                    id="form-surname"
+                    type="text"
+                    name="surname"
+                    placeholder="Александров"
+                    required
+                    className={styles.input}
+                    value={surname}
+                    onChange={e=> setSurName(e.target.value)}
                 />
             </FormControl>
             <FormControl
@@ -109,7 +128,7 @@ function RegisterForm(props) {
 
 RegisterForm.propsType = {
     isLoggedIn: PropTypes.bool,
-    registration: PropTypes.func
+    register: PropTypes.func
 }
 
 export const RegisterFormWithAuth = connect(

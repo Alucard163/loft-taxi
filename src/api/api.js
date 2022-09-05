@@ -5,7 +5,6 @@ export const serverRegister = async (email, password, name, surname) => {
         name: name,
         surname: surname
     }
-    console.log(JSON.stringify(user));
 
     return fetch(
         'https://loft-taxi.glitch.me/register', {
@@ -18,9 +17,8 @@ export const serverRegister = async (email, password, name, surname) => {
     )
         .then(res => res.json())
         .then(data => {
-        localStorage.setItem('token', data.token);
-        console.log(data);
-        return data;
+            localStorage.setItem('token', data.token);
+            return data;
     })
         .catch((e) => {
             console.log('Error: ' + e);
@@ -32,7 +30,6 @@ export const serverLogin = async (email, password) => {
         email: email,
         password: password
     }
-    console.log(JSON.stringify(user));
 
     return fetch(
         'https://loft-taxi.glitch.me/auth', {
@@ -45,9 +42,8 @@ export const serverLogin = async (email, password) => {
     )
         .then(res => res.json())
         .then(data => {
-        localStorage.setItem('token', data.token);
-        console.log(data);
-        return data;
+            localStorage.setItem('token', data.token);
+            return data;
     })
         .catch((e) => {
             console.log('Error: ' + e);

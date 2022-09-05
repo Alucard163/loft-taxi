@@ -17,7 +17,7 @@ describe("authMiddleware", () => {
             it("authenticates through api", async () => {
                 serverLogin.mockImplementation(() => data)
                 const dispatch = jest.fn();
-                const getToken = jest.fn();
+
                 await authMiddleware({ dispatch })()(
                     authenticate("login", "password")
                 );
@@ -33,7 +33,7 @@ describe("authMiddleware", () => {
                 const dispatch = jest.fn();
 
                 await authMiddleware({ dispatch })()(
-                    authenticate("testlogin", "testpassword")
+                    authenticate("login", "password")
                 );
                 expect(dispatch).not.toBeCalled();
             });

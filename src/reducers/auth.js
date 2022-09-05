@@ -1,24 +1,25 @@
 import { LOG_IN, LOG_OUT, GET_TOKEN } from "../actions"
+import { createReducer } from '@reduxjs/toolkit'
 
 const initialState = {
     isLoggedIn: false,
     token: '',
 }
 
-export default function auth (state = initialState, action) {
-    switch (action.type) {
-        case LOG_IN: {
-            return {isLoggedIn: true}
-        }
-        case LOG_OUT: {
-            return {isLoggedIn: false}
-        }
-        case GET_TOKEN: {
-            return {
-                ...state,
-                token: action.token
-            }
-        }
-        default: return state
-    }
-}
+const auth = createReducer(initialState, (builder) => {
+    builder
+        .addCase(LOG_IN, (state, action) => {
+            state.isLoggedIn = true
+        })
+        .addCase(LOG_OUT, (state, action) => {
+            state.isLoggedIn = false
+        })
+        .addCase(GET_TOKEN, (state, action) => {
+            return {...state, token: action.token}
+        })
+        .addDefaultCase((state, action) => {
+            return state
+        })
+})
+
+export default auth;

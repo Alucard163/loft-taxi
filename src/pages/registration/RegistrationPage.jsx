@@ -7,20 +7,13 @@ import { connect } from 'react-redux';
 
 import styles from "./RegistrationPage.module.css"
 
-class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        return (
-            <div data-testid="registration-page" className={styles.registration}>
-                <Aside />
-                <Auth />
-            </div>
-        )
-    }
+function RegistrationPage() {
+    return (
+        <div data-testid="registration-page" className={styles.registration}>
+            <Aside />
+            <Auth />
+        </div>
+    )
 }
 
 RegistrationPage.propTypes = {

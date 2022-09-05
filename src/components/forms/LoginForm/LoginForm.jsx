@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
 import { authenticate } from "../../../actions";
 import { Redirect } from 'react-router-dom';
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 
 import styles from './LoginForm.module.css'
 
-function LoginForm(props) {
+function LoginForm(props, {useDispatchHook=useDispatch}) {
     const { isLoggedIn } = props;
+    const dispatch = useDispatchHook();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,7 +20,7 @@ function LoginForm(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.authenticate(email, password);
+        dispatch(authenticate(email, password));
         handleReset();
     };
 
@@ -29,7 +30,7 @@ function LoginForm(props) {
     }
 
     const handleClick = () => {
-        props.authenticate(email, password);
+        dispatch(authenticate(email, password));
         handleReset();
     };
 
@@ -100,8 +101,7 @@ function LoginForm(props) {
 }
 
 LoginForm.propsType = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
 }
 
 export const LoginFormWithAuth = connect(

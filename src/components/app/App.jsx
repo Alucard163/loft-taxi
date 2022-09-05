@@ -20,8 +20,14 @@ class App extends React.Component {
       render() {
           let storageIsLoggedIn = false;
 
-          if (localStorage.length && localStorage.getItem('token')) {
-              storageIsLoggedIn = JSON.parse(localStorage.getItem('token')).auth.isLoggedIn;
+          if (localStorage.length && localStorage.getItem('token') !== undefined) {
+              const token = localStorage.getItem('token')
+              if (!token) {
+                  localStorage.setItem('token', null);
+              }
+              if (token) {
+                  storageIsLoggedIn = JSON.parse(localStorage.getItem('token'))?.auth?.isLoggedIn;
+              }
           }
         const { isLoggedIn } = this.props;
 
