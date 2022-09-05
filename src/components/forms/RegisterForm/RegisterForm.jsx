@@ -1,26 +1,29 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { authHOC, AuthContext } from '../../../context/AuthContext';
+import { connect } from "react-redux";
+import { register } from "../../../actions";
+
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
 
-import styles from './RegisterForm.module.css'
+import styles from './RegisterForm.module.css';
+import { Redirect } from "react-router-dom";
 
 function RegisterForm(props) {
-    const context = useContext(AuthContext);
+    const { isLoggedIn } = props;
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
 
     useEffect(() => {
-        if (context.isLoggedIn) {
-            props.setPage('map')
+        if (isLoggedIn) {
+            return <Redirect to='/map' />
         }
     });
 
     const handleSubmit = event => {
         event.preventDefault();
-        context.logIn(email, password);
+        props.register(email, password, name)
         handleReset();
     };
 
@@ -31,7 +34,6 @@ function RegisterForm(props) {
     }
 
     const handleClick = () => {
-        context.logIn(email, password);
         handleReset();
     };
 
@@ -54,7 +56,7 @@ function RegisterForm(props) {
                     id="form-email"
                     type="text"
                     name="email"
-                    placeholder="test@test.com"
+                    placeholder="email@example.com"
                     className={styles.input}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
@@ -89,7 +91,7 @@ function RegisterForm(props) {
                     id="form-password"
                     type="password"
                     name="password"
-                    placeholder="test"
+                    placeholder="password"
                     required
                     className={styles.input}
                     value={password}
@@ -106,8 +108,11 @@ function RegisterForm(props) {
 }
 
 RegisterForm.propsType = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
+    registration: PropTypes.func
 }
 
-export const RegisterFormWithAuth = authHOC(RegisterForm);
+export const RegisterFormWithAuth = connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    { register }
+) (RegisterForm);

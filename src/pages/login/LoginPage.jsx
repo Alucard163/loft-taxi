@@ -12,13 +12,12 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { setPage, page } =  this.props;
 
         return (
             <div data-testid="login-page" className={styles.login}>
                 {process.env.MAPBOX_ACCESS_TOKEN}
                 <Aside />
-                <Auth setPage={setPage} page={page}/>
+                <Auth />
             </div>
         )
     }

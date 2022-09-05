@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
@@ -9,28 +11,31 @@ import styles from './Auth.module.css';
 class Auth extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isLoginPage: props.page === 'login'}
+        this.state = { isLoggedIn: this.props.isLoggedIn }
     }
 
     render() {
-        const { setPage, page } =  this.props;
-        const { isLoginPage } = this.state;
+        const { isLoggedIn } = this.state;
+
+        if (isLoggedIn) {
+            return <Redirect to='/map' />
+        }
 
         return (
             <div data-testid="auth-component" className={styles.auth}>
                 <div className={styles.container}>
                     <div className={styles.wrap}>
                         <h4 className={styles.in}>
-                            {isLoginPage ? 'Войти' : 'Зарегистрироваться'}
+                            {!isLoggedIn ? 'Войти' : 'Зарегистрироваться'}
                         </h4>
-                        {isLoginPage ?
-                            <LoginForm setPage={setPage} page={page}/>
-                            : <RegisterForm setPage={setPage} page={page}/>
-                        }
+                        <Switch>
+                            <Route exact path="/" component={LoginForm} />
+                            <Route exact path="/signup" component={RegisterForm} />
+                        </Switch>
                         <div data-testid="auth-text">
-                            {isLoginPage ?
-                                <p>Новый пользователь? <span className={styles.link} onClick={() => setPage('register')} >Зарегистрируйтесь</span></p>
-                                : <p>Уже зарегистрированы? <span className={styles.link} onClick={() => setPage('login')}>Войти</span></p>
+                            {!isLoggedIn ?
+                                <p>Новый пользователь? <Link className={styles.link} to="/signup" >Зарегистрируйтесь</Link></p>
+                                : <p>Уже зарегистрированы? <Link className={styles.link} to="/">Войти</Link></p>
                             }
                         </div>
                     </div>
@@ -41,8 +46,10 @@ class Auth extends React.Component {
 }
 
 Auth.propTypes = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
 }
 
-export default Auth;
+export default connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    null)
+(Auth);

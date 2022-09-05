@@ -1,25 +1,25 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
-
-import { authHOC, AuthContext } from '../../../context/AuthContext';
+import { authenticate } from "../../../actions";
+import { Redirect } from 'react-router-dom';
+import {connect} from "react-redux";
 
 import styles from './LoginForm.module.css'
 
 function LoginForm(props) {
-    const context = useContext(AuthContext);
+    const { isLoggedIn } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        if (context.isLoggedIn) {
-            props.setPage('map')
-        }
-    });
+    if (isLoggedIn) {
+        return <Redirect to='/map' />
+    }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        context.logIn(email, password);
+        props.authenticate(email, password);
         handleReset();
     };
 
@@ -29,7 +29,7 @@ function LoginForm(props) {
     }
 
     const handleClick = () => {
-        context.logIn(email, password);
+        props.authenticate(email, password);
         handleReset();
     };
 
@@ -55,7 +55,7 @@ function LoginForm(props) {
                     id="form-email"
                     type="text"
                     name="email"
-                    placeholder="test@test.com"
+                    placeholder="email@example.com"
                     required
                     value={email}
                     className={styles.input}
@@ -75,7 +75,7 @@ function LoginForm(props) {
                     id="form-password"
                     type="password"
                     name="password"
-                    placeholder="test"
+                    placeholder="password"
                     required
                     value={password}
                     onChange={e => setPassword(e.target.value)}
@@ -104,4 +104,7 @@ LoginForm.propsType = {
     setPage: PropTypes.func,
 }
 
-export const LoginFormWithAuth = authHOC(LoginForm);
+export const LoginFormWithAuth = connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    { authenticate }
+)(LoginForm);
