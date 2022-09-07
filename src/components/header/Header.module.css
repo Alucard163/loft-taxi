@@ -33,7 +33,7 @@
     cursor: pointer;
 }
 
-li .isActive {
+.isActive {
     color: #FDBF5A;
 }
 

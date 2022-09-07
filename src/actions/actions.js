@@ -18,5 +18,7 @@ export const authenticate = createAction(AUTHENTICATE, function prepare(email, p
 })
 
 export const getToken = createAction(GET_TOKEN, function prepare(token) {
-    return token
+    return {
+        payload: token
+    }
 })

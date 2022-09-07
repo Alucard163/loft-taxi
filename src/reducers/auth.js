@@ -13,12 +13,13 @@ const auth = createReducer(initialState, (builder) => {
         })
         .addCase(LOG_OUT, (state, action) => {
             state.isLoggedIn = false
+            state.token = ''
         })
         .addCase(GET_TOKEN, (state, action) => {
-            return {...state, token: action.token}
+            state.token = action.payload
         })
         .addDefaultCase((state, action) => {
-            return state
+            return initialState
         })
 })
 

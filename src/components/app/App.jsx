@@ -18,25 +18,13 @@ class App extends React.Component {
     }
 
       render() {
-          let storageIsLoggedIn = false;
-
-          if (localStorage.length && localStorage.getItem('token') !== undefined) {
-              const token = localStorage.getItem('token')
-              if (!token) {
-                  localStorage.setItem('token', null);
-              }
-              if (token) {
-                  storageIsLoggedIn = JSON.parse(localStorage.getItem('token'))?.auth?.isLoggedIn;
-              }
-          }
-        const { isLoggedIn } = this.props;
-
+        const { isLoggedIn, token } = this.props;
         return (
             <div className={styles.app}>
                 {isLoggedIn && <Header />}
                 <Switch>
                     {
-                        storageIsLoggedIn
+                        token
                             ?
                             (<>
                                 <PrivateRoute path="/map" component={MapPage} />
@@ -57,6 +45,8 @@ class App extends React.Component {
 }
 
 export default connect(
-    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        token: state.auth.token }),
     { logIn }
 )(App);
