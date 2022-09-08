@@ -1,57 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { links } from "../../utils/constants/header";
 import PropTypes from "prop-types";
-import { AuthContext } from '../../context/AuthContext';
+import { Link, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import { logOut } from "../../actions";
 
 import styles from './Header.module.css';
 import logo from '../../assets/svg/logo.svg';
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function Header(props) {
+    const location = useLocation();
+    const [currentPage, setCurrentPage] = useState(location.pathname)
 
-    static contextType = AuthContext;
+    useEffect(() => {
+        setCurrentPage(location.pathname)
+    }, [location.pathname]);
 
-    isActive = (key) => key === this.props.page;
-    activeClass = (key) => {
-        return this.isActive(key) ? `${styles.isActive}` : '';
+    const activeClass = (key) => {
+        const isActive = currentPage === `/${key}`;
+        return isActive ? `${styles.isActive}` : '';
     }
-    handleClick = (key) => {
+    const handleClick = (key) => {
         if (key === 'login') {
-            this.context.logOut()
+            props.logOut()
         }
-        this.props.setPage(key)
     }
 
-    componentDidUpdate() {
-        if (!this.context.isLoggedIn)
-            this.props.setPage('login')
-    }
-
-    render() {
-        return (
-            <header data-testid="header-component" className={styles['header']}>
-                <img src={logo} alt="логотип такси" className={styles['logo']} />
-                <nav>
-                    <ul className={styles['Nav']}>
-                        {links.map(item => (
-                            <li key={item.id} className={`${styles.link} ${this.activeClass(item.key)}`}>
-                                <div onClick={() => this.handleClick(item.key)}>
-                                    {item.text}
-                                </div>
-                            </li>)
-                        )}
-                    </ul>
-                </nav>
-            </header>
-        )
-    }
+    return (
+        <header data-testid="header-component" className={styles['header']}>
+            <img src={logo} alt="логотип такси" className={styles['logo']} />
+            <nav>
+                <ul className={styles['Nav']}>
+                    {links.map(item => (
+                        <li key={item.id} className={`${styles.link} ${activeClass(item.key)}`}>
+                            <Link to={item.href} onClick={() => handleClick(item.key)}>
+                                {item.text}
+                            </Link>
+                        </li>)
+                    )}
+                </ul>
+            </nav>
+        </header>
+    )
 }
 
 Header.propTypes = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
+    logOut: PropTypes.func,
 }
 
-export default Header;
+export default connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    { logOut }
+)
+(Header);

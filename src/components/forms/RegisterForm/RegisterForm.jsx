@@ -1,26 +1,28 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { authHOC, AuthContext } from '../../../context/AuthContext';
-import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+import { connect, useDispatch } from "react-redux";
+import { register } from "../../../actions";
 
-import styles from './RegisterForm.module.css'
+import { Box, Button, FormControl, Input, InputLabel } from '@mui/material';
 
-function RegisterForm(props) {
-    const context = useContext(AuthContext);
+import styles from './RegisterForm.module.css';
+import { Redirect } from "react-router-dom";
+
+function RegisterForm(props, {useDispatchHook=useDispatch}) {
+    const { isLoggedIn } = props;
+    const dispatch = useDispatchHook();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [surname, setSurName] = useState('');
     const [password, setPassword] = useState('');
 
-
-    useEffect(() => {
-        if (context.isLoggedIn) {
-            props.setPage('map')
-        }
-    });
+    if (isLoggedIn) {
+        return <Redirect to='/map' />
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
-        context.logIn(email, password);
+        dispatch(register(email, password, name, surname));
         handleReset();
     };
 
@@ -28,10 +30,11 @@ function RegisterForm(props) {
         setEmail('');
         setPassword('');
         setName('');
+        setSurName('');
     }
 
     const handleClick = () => {
-        context.logIn(email, password);
+        dispatch(register(email, password, name, surname));
         handleReset();
     };
 
@@ -54,7 +57,7 @@ function RegisterForm(props) {
                     id="form-email"
                     type="text"
                     name="email"
-                    placeholder="test@test.com"
+                    placeholder="email@example.com"
                     className={styles.input}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
@@ -71,11 +74,29 @@ function RegisterForm(props) {
                     id="form-name"
                     type="text"
                     name="name"
-                    placeholder="Петр Александрович"
+                    placeholder="Петр"
                     required
                     className={styles.input}
                     value={name}
                     onChange={e=> setName(e.target.value)}
+                />
+            </FormControl>
+            <FormControl
+                variant="standard"
+                fullWidth
+                required
+                className={styles.formItem}
+            >
+                <InputLabel htmlFor="form-surname">Ваша фамилия?*</InputLabel>
+                <Input
+                    id="form-surname"
+                    type="text"
+                    name="surname"
+                    placeholder="Александров"
+                    required
+                    className={styles.input}
+                    value={surname}
+                    onChange={e=> setSurName(e.target.value)}
                 />
             </FormControl>
             <FormControl
@@ -89,7 +110,7 @@ function RegisterForm(props) {
                     id="form-password"
                     type="password"
                     name="password"
-                    placeholder="test"
+                    placeholder="password"
                     required
                     className={styles.input}
                     value={password}
@@ -106,8 +127,11 @@ function RegisterForm(props) {
 }
 
 RegisterForm.propsType = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
+    register: PropTypes.func
 }
 
-export const RegisterFormWithAuth = authHOC(RegisterForm);
+export const RegisterFormWithAuth = connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    { register }
+) (RegisterForm);

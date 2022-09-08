@@ -3,30 +3,24 @@ import PropTypes from "prop-types";
 
 import Aside from "../../components/aside";
 import Auth from "../../components/auth";
+import { connect } from 'react-redux';
 
 import styles from "./RegistrationPage.module.css"
 
-class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const { setPage } =  this.props;
-        const { page } = this.props;
-
-        return (
-            <div data-testid="registration-page" className={styles.registration}>
-                <Aside />
-                <Auth setPage={setPage} page={page}/>
-            </div>
-        )
-    }
+function RegistrationPage() {
+    return (
+        <div data-testid="registration-page" className={styles.registration}>
+            <Aside />
+            <Auth />
+        </div>
+    )
 }
 
 RegistrationPage.propTypes = {
-    page: PropTypes.string,
-    setPage: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
 }
 
-export default RegistrationPage
+export default connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    null
+) (RegistrationPage);

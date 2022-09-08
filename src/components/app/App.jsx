@@ -1,7 +1,10 @@
 import React from "react";
 import styles from './App.module.css';
 
-import { authHOC } from "../../context/AuthContext";
+import PrivateRoute from "../../pages/private";
+import { connect } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router';
+import { logIn } from "../../actions";
 
 import Header from "../header";
 import LoginPage from "../../pages/login";
@@ -9,37 +12,41 @@ import RegistrationPage from "../../pages/registration";
 import MapPage from "../../pages/map";
 import ProfilePage from "../../pages/profile";
 
-const PAGES = {
-    map: MapPage,
-    login: LoginPage,
-    register: RegistrationPage,
-    profile: ProfilePage,
-}
-
 class App extends React.Component {
     constructor() {
         super();
-        this.state = { page: 'login'}
-    }
-
-    setPage = (page) => {
-        this.context.isLoggedIn === false
-            ? this.setState({ page: 'login' })
-            : this.setState({ page })
     }
 
       render() {
-        const { page } = this.state;
-        const showHeader = page === 'map' || page === 'profile'
-        const CurrentPage = PAGES[page];
-
+        const { isLoggedIn, token } = this.props;
         return (
             <div className={styles.app}>
-                {showHeader && <Header setPage={this.setPage} page={page} />}
-                <CurrentPage setPage={this.setPage} page={page}/>
+                {isLoggedIn && <Header />}
+                <Switch>
+                    {
+                        token
+                            ?
+                            (<>
+                                <PrivateRoute path="/map" component={MapPage} />
+                                <PrivateRoute path="/profile" component={ProfilePage} />
+                                <Redirect to="/map" />
+
+                            </>)
+                            : (<>
+                                <Route exact path="/" component={LoginPage} />
+                                <Route exact path="/signup" component={RegistrationPage} />
+                                <Redirect to="/" />
+                            </>)
+                    }
+                </Switch>
             </div>
             )
       };
 }
 
-export default authHOC(App);
+export default connect(
+    (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        token: state.auth.token }),
+    { logIn }
+)(App);

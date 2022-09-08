@@ -1,5 +1,10 @@
 .profile {
-    position: relative;
-    width: 100%;
+    background: url(./img/map.png) center center no-repeat;
+    background-size: cover;
+    flex-grow: 7;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
