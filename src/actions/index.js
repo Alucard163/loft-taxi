@@ -1,4 +1,55 @@
-import {logIn, logOut, register, authenticate, getToken } from "./actions";
-import { LOG_IN, LOG_OUT, REGISTER, AUTHENTICATE, GET_TOKEN } from "./types";
+import {
+    logIn,
+    logOut,
+    register,
+    authenticate,
+    getToken,
+    askForRoute,
+    askForCard,
+    askForAddress,
+    getAddresses,
+    getRoute,
+    updateCard,
+    cardAdded
+} from "./actions";
+import {
+    LOG_IN,
+    LOG_OUT,
+    REGISTER,
+    AUTHENTICATE,
+    GET_TOKEN,
+    GETROUTE,
+    ASKFOROUTE,
+    GETADDRESSES,
+    ASKFORADDRESS,
+    CARDADDED,
+    ASKFORCARD,
+    UPDATECARD
+} from "./types";
 
-export { logIn, logOut, register, authenticate, LOG_IN, LOG_OUT, REGISTER, AUTHENTICATE, GET_TOKEN, getToken };
+export {
+    logIn,
+    logOut,
+    register,
+    authenticate,
+    LOG_IN,
+    LOG_OUT,
+    REGISTER,
+    AUTHENTICATE,
+    GET_TOKEN,
+    getToken,
+    updateCard,
+    getRoute,
+    cardAdded,
+    getAddresses,
+    askForAddress,
+    askForCard,
+    askForRoute,
+    UPDATECARD,
+    ASKFORCARD,
+    CARDADDED,
+    ASKFORADDRESS,
+    GETADDRESSES,
+    ASKFOROUTE,
+    GETROUTE
+};

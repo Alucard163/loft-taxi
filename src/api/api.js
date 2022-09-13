@@ -21,7 +21,7 @@ export const serverRegister = async (email, password, name, surname) => {
             return data;
     })
         .catch((e) => {
-            console.log('Error: ' + e);
+            console.error('Error: ' + e);
         });
 }
 
@@ -46,6 +46,68 @@ export const serverLogin = async (email, password) => {
             return data;
     })
         .catch((e) => {
-            console.log('Error: ' + e);
+            console.error('Error: ' + e);
+        });
+}
+
+
+export const serverUpdateCard = async (cardName, cardNumber, cardDate, cardCvc) => {
+    let user = {
+        cardNumber: cardNumber,
+        expiryDate: cardDate,
+        cardName: cardName,
+        cvc: cardCvc,
+        token: localStorage.getItem('token')
+    }
+
+    return fetch(
+        'https://loft-taxi.glitch.me/card', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }
+    )
+        .then(res => res.json())
+        .then(data => {
+            console.log('data', data);
+            return data;
+         })
+        .catch(e => console.error(e));
+}
+
+export const serverGetCard = async () => {
+    let token = localStorage.getItem('token');
+    console.log('token', token)
+    return fetch(`https://loft-taxi.glitch.me/card?token=${token}`)
+        .then(res => res.json())
+        .then(data => {
+            return data;
+        })
+        .catch((e) => {
+            console.error('Error: ' + e);
+        });
+}
+
+export const serverAddressList = async () => {
+    return fetch('https://loft-taxi.glitch.me/addressList')
+        .then(res => res.json())
+        .then(data => {
+            return data.addresses
+        })
+        .catch((e) => {
+            console.error('Error: ' + e);
+        });
+}
+
+export const serverGetRoute = async (from, to) => {
+    return fetch(`https://loft-taxi.glitch.me/route?address1=${from}&address2=${to}`)
+        .then(res => res.json())
+        .then(data => {
+            return data
+        })
+        .catch((e) => {
+            console.error('Error: ' + e);
         });
 }
