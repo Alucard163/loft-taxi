@@ -10,7 +10,9 @@ const card = createReducer(initialState, (builder) => {
       .addCase(CARDADDED, (state, action) => {
           state.isCardUpdated = true
       })
-      .addDefaultCase((state, action) => {})
+      .addDefaultCase((state, action) => {
+          return state
+      })
 })
 
 export default card;
