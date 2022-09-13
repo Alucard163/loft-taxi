@@ -71,7 +71,6 @@ export const serverUpdateCard = async (cardName, cardNumber, cardDate, cardCvc) 
     )
         .then(res => res.json())
         .then(data => {
-            console.log('data', data);
             return data;
          })
         .catch(e => console.error(e));
@@ -79,7 +78,6 @@ export const serverUpdateCard = async (cardName, cardNumber, cardDate, cardCvc) 
 
 export const serverGetCard = async () => {
     let token = localStorage.getItem('token');
-    console.log('token', token)
     return fetch(`https://loft-taxi.glitch.me/card?token=${token}`)
         .then(res => res.json())
         .then(data => {
