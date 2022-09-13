@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { connect, useDispatch } from "react-redux";
-import { Autocomplete, TextField, Typography, Button } from "@mui/material";
+import { Autocomplete, TextField, Typography, Button, Card, CardContent } from "@mui/material";
 import { Link } from 'react-router-dom';
 
 import { askForAddress, askForRoute, askForCard } from '../../actions'
@@ -12,11 +12,11 @@ import styles from './MapBox.module.css';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
-const MapBox = (props, {useDispatchHook=useDispatch}) => {
+const MapBox = (props) => {
     let map = useRef(null);
     const { isCardUpdated, route } = props;
     const mapContainer = useRef(null);
-    const dispatch = useDispatchHook();
+    const dispatch = useDispatch();
     const [lng, setLng] = useState(mapboxData.lng);
     const [lat, setLat] = useState(mapboxData.lat);
     const [zoom, setZoom] = useState(mapboxData.zoom);
@@ -49,8 +49,7 @@ const MapBox = (props, {useDispatchHook=useDispatch}) => {
 
     useEffect(() => {
         if (route.length !== 0) {
-            console.log('we are here');
-            drawRoute(this.map, route);
+            drawRoute(map, route);
         }
     });
 
@@ -80,10 +79,12 @@ const MapBox = (props, {useDispatchHook=useDispatch}) => {
                 </>
                 :
                 <>
-                    <div style={{ position: "absolute", top: '2%', left: '2%' }}>
-                        <Typography fontSize='18px' align='center' sx={{ marginBottom: '25px' }}>Введите платежные данные</Typography>
-                        <Link to='/profile' className="Login__submit">Перейти в профиль</Link>
-                    </div>
+                    <Card className={styles.card}>
+                        <CardContent>
+                            <Typography fontSize='18px' align='center' sx={{ marginBottom: '25px' }}>Введите платежные данные</Typography>
+                            <Link to='/profile' className="Login__submit">Перейти в профиль</Link>
+                        </CardContent>
+                    </Card>
                 </>
             }
         </>

@@ -19,7 +19,7 @@ const auth = createReducer(initialState, (builder) => {
             state.token = action.payload
         })
         .addDefaultCase((state, action) => {
-            return initialState
+            return state
         })
 })
 

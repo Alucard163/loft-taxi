@@ -11,7 +11,8 @@ import {
     ASKFORADDRESS,
     GETROUTE,
     GETADDRESSES,
-    ASKFOROUTE
+    ASKFOROUTE,
+    SET_LOADING,
 } from "./types";
 
 export const logIn = createAction(LOG_IN)
@@ -63,5 +64,11 @@ export const askForRoute = createAction(ASKFOROUTE, (from, to) => {
 export const getRoute = createAction(GETROUTE, (route) => {
     return {
         payload: route
+    }
+})
+
+export const setLoading = createAction(SET_LOADING, (value) => {
+    return {
+        payload: value
     }
 })

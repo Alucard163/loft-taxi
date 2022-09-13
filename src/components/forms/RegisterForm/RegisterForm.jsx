@@ -9,7 +9,7 @@ import styles from './RegisterForm.module.css';
 import { Redirect } from "react-router-dom";
 
 function RegisterForm(props, {useDispatchHook=useDispatch}) {
-    const { isLoggedIn } = props;
+    const { isLoggedIn, isLoading } = props;
     const dispatch = useDispatchHook();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -118,9 +118,16 @@ function RegisterForm(props, {useDispatchHook=useDispatch}) {
                 />
             </FormControl>
             <div className={`${styles.formItem} ${styles.submit}`}>
-                <Button fullWidth className={styles.input} onClick={() => handleClick()} >
-                    Зарегистрироваться
-                </Button>
+                {isLoading ? (
+                    <Button fullWidth className={styles.input} disabled>
+                        Загрузка...
+                    </Button>
+                ) : (
+                    <Button fullWidth className={styles.input} onClick={() => handleClick()} >
+                        Зарегистрироваться
+                    </Button>
+                )}
+
             </div>
         </Box>
     );
@@ -128,10 +135,14 @@ function RegisterForm(props, {useDispatchHook=useDispatch}) {
 
 RegisterForm.propsType = {
     isLoggedIn: PropTypes.bool,
+    isLoading: PropTypes.bool,
     register: PropTypes.func
 }
 
 export const RegisterFormWithAuth = connect(
-    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        isLoading: state.loading.isLoading,
+    }),
     { register }
 ) (RegisterForm);

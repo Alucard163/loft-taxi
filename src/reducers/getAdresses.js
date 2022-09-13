@@ -11,7 +11,7 @@ const address = createReducer(initialState, (builder) => {
         state.addresses = action.payload
       })
       .addDefaultCase((state, action) => {
-        return initialState
+        return state
       })
 })
 

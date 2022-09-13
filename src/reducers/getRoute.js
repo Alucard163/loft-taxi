@@ -10,7 +10,9 @@ const route = createReducer(initialState, (builder) => {
         .addCase(GETROUTE, (state, action) => {
             state.route = action.payload
         })
-        .addDefaultCase((state, action) => {})
+        .addDefaultCase((state, action) => {
+            return state
+        })
 })
 
 export default route;

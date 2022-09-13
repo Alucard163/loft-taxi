@@ -8,3 +8,30 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.button {
+    padding: 18px 90px;
+    background: #FDBF5A;
+    border-color: #FDBF5A;
+    color: #000000;
+    border-radius: 70px;
+    text-transform: none;
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 29px;
+}
+
+.header {
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 42px;
+    color: #000000;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+}

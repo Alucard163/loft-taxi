@@ -8,7 +8,7 @@ import {connect, useDispatch} from "react-redux";
 import styles from './LoginForm.module.css'
 
 function LoginForm(props, {useDispatchHook=useDispatch}) {
-    const { isLoggedIn } = props;
+    const { isLoggedIn, isLoading } = props;
     const dispatch = useDispatchHook();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -88,13 +88,24 @@ function LoginForm(props, {useDispatchHook=useDispatch}) {
                 </FormHelperText>
             </FormControl>
             <div className={`${styles.formItem} ${styles.submit}`}>
-                <Button
-                    fullWidth
-                    className={styles.input}
-                    onClick={() => handleClick()}
-                >
-                    Войти
-                </Button>
+                {isLoading ? (
+                        <Button
+                            fullWidth
+                            className={styles.input}
+                            disabled
+                        >
+                            Загрузка...
+                        </Button>
+                    )
+                    : (
+                        <Button
+                            fullWidth
+                            className={styles.input}
+                            onClick={() => handleClick()}
+                        >
+                            Войти
+                        </Button>
+                    )}
             </div>
         </Box>
     );
@@ -102,9 +113,13 @@ function LoginForm(props, {useDispatchHook=useDispatch}) {
 
 LoginForm.propsType = {
     isLoggedIn: PropTypes.bool,
+    isLoading: PropTypes.bool
 }
 
 export const LoginFormWithAuth = connect(
-    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        isLoading: state.loading.isLoading,
+    }),
     { authenticate }
 )(LoginForm);

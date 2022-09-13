@@ -10,7 +10,8 @@ import {
     getAddresses,
     getRoute,
     updateCard,
-    cardAdded
+    cardAdded,
+    setLoading,
 } from "./actions";
 import {
     LOG_IN,
@@ -24,7 +25,8 @@ import {
     ASKFORADDRESS,
     CARDADDED,
     ASKFORCARD,
-    UPDATECARD
+    UPDATECARD,
+    SET_LOADING,
 } from "./types";
 
 export {
@@ -51,5 +53,7 @@ export {
     ASKFORADDRESS,
     GETADDRESSES,
     ASKFOROUTE,
-    GETROUTE
+    GETROUTE,
+    setLoading,
+    SET_LOADING
 };

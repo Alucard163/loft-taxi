@@ -1,7 +1,7 @@
 import React from "react";
 import Card from '@mui/material/Card';
 import { CardContent, TextField, Typography, Box, Stack } from "@mui/material";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import CardImg from './img/Group 45.png';
 import {updateCard} from "../../actions";
 import { Link } from 'react-router-dom';
@@ -10,21 +10,22 @@ import styles from './ProfilePage.module.css';
 
 function ProfilePage(props) {
     const { isCardUpdated } = props;
+    const dispatch = useDispatch();
     const handleSubmit = event => {
         event.preventDefault();
         const { cardName, cardNumber, cardDate, cardCvc } = event.target;
-        props.updateCard(
+        dispatch(updateCard(
             cardName.value, cardNumber.value, cardDate.value, cardCvc.value
-        )
+        ))
     }
 
     return (
         <div data-testid="profile-page" className={styles.profile}>
             {!isCardUpdated ?
                 <form onSubmit={handleSubmit}>
-                    <Card sx={{ minWidth: 275, minHeight: 275 }}>
+                    <Card className={styles.card} sx={{ minWidth: 275, paddingX: 5, paddingY: 7 }}>
                         <CardContent>
-                            <Typography fontSize='36px' align='center' >Профиль</Typography>
+                            <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
                             <Typography fontSize='18px' align='center' gutterBottom >Введите платежные данные</Typography>
                             <Stack
                                 direction="row"
@@ -53,7 +54,7 @@ function ProfilePage(props) {
                                 justifyContent="center"
                                 alignItems="center"
                             >
-                                <input type="submit" value="Сохранить" className="Login__submit" />
+                                <input type="submit" value="Сохранить" className={styles.button} />
                             </Stack>
                         </CardContent>
                     </Card>
@@ -61,15 +62,15 @@ function ProfilePage(props) {
 
                 :
 
-                <Card sx={{ minWidth: 275, minHeight: 275 }}>
+                <Card sx={{ minWidth: 275, minHeight: 345 }}>
                     <CardContent>
-                        <Typography fontSize='36px' align='center' >Профиль</Typography>
+                        <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
                         <Typography fontSize='18px' align='center' gutterBottom >Ваши данные успешно обновлены!</Typography>
                         <Stack
                             justifyContent="center"
                             alignItems="center"
                         >
-                            <Link to='/map' className="Login__submit">Перейти на карту</Link>
+                            <Link to='/map' className={styles.button}>Перейти на карту</Link>
                         </Stack>
                     </CardContent>
                 </Card>}
