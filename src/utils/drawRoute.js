@@ -1,9 +1,9 @@
 export const drawRoute = (map, coordinates) => {
-    map.flyTo({
+    map.current.flyTo({
         center: coordinates[0],
         zoom: 15
     });
-    map.addLayer({
+    map.current.addLayer({
         id: "route",
         type: "line",
         source: {

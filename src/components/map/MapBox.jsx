@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { connect, useDispatch } from "react-redux";
-import { Autocomplete, TextField, Typography, Button, Card, CardContent } from "@mui/material";
-import { Link } from 'react-router-dom';
 
-import { askForAddress, askForRoute, askForCard } from '../../actions'
+import Order from "../order";
+import { askForAddress, askForRoute, askForCard, clearRoute } from '../../actions';
+
 import { drawRoute } from "../../utils/drawRoute";
 import { mapboxData } from "../../utils/constants/mapbox";
 
@@ -14,21 +14,15 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
 const MapBox = (props) => {
     let map = useRef(null);
-    const { isCardUpdated, route } = props;
+    const { route } = props;
     const mapContainer = useRef(null);
     const dispatch = useDispatch();
     const [lng, setLng] = useState(mapboxData.lng);
     const [lat, setLat] = useState(mapboxData.lat);
     const [zoom, setZoom] = useState(mapboxData.zoom);
 
-    const handleSubmit = async event => {
-        event.preventDefault();
-        const { from, to } = event.target;
-        await dispatch(askForRoute(from.value, to.value));
-    }
-
     useEffect(() => {
-        map = new mapboxgl.Map({
+        map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: mapboxData.style,
             center: [lng, lat],
@@ -37,14 +31,17 @@ const MapBox = (props) => {
         dispatch(askForCard());
         dispatch(askForAddress());
 
-        map.on('move', () => {
-            setLng(map.getCenter().lng.toFixed(4));
-            setLat(map.getCenter().lat.toFixed(4));
-            setZoom(map.getZoom().toFixed(2));
+        map.current.on('move', () => {
+            setLng(map.current.getCenter().lng.toFixed(4));
+            setLat(map.current.getCenter().lat.toFixed(4));
+            setZoom(map.current.getZoom().toFixed(2));
         });
 
         // Clean up on unmount
-        return () => map.remove();
+        return () => {
+            map.current.remove();
+            dispatch(clearRoute(route));
+        }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
@@ -56,37 +53,7 @@ const MapBox = (props) => {
     return (
         <>
             <div data-testid="mapbox-container" ref={mapContainer} className={styles.map} />
-            {isCardUpdated ?
-                <>
-                    <form onSubmit={handleSubmit}>
-                        <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={props.addresses}
-                            sx={{ width: 300, position: 'absolute', top: '2%', left: '2%', background: '#fff' }}
-                            renderInput={(params) => <TextField {...params} label="Откуда" name='from' />}
-                        />
-                        <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={props.addresses}
-                            sx={{ width: 300, position: 'absolute', top: '10%', left: '2%', background: '#fff' }}
-                            renderInput={(params) => <TextField {...params} label="Куда" name='to' />}
-                        />
-                        <Button sx={{ position: 'absolute', top: '18%', left: '2%', background: '#fff' }} type='submit'
-                        >Вызвать такси</Button>
-                    </form>
-                </>
-                :
-                <>
-                    <Card className={styles.card}>
-                        <CardContent>
-                            <Typography fontSize='18px' align='center' sx={{ marginBottom: '25px' }}>Введите платежные данные</Typography>
-                            <Link to='/profile' className="Login__submit">Перейти в профиль</Link>
-                        </CardContent>
-                    </Card>
-                </>
-            }
+            <Order />
         </>
     );
 };
@@ -97,5 +64,5 @@ export default connect(
         addresses: state.address.addresses,
         route: state.route.route
     }),
-    { askForAddress, askForRoute, askForCard })
+    { askForAddress, askForRoute, askForCard, clearRoute })
 (MapBox);

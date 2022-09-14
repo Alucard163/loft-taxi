@@ -13,6 +13,7 @@ import {
     GETADDRESSES,
     ASKFOROUTE,
     SET_LOADING,
+    CLEARROUTE,
 } from "./types";
 
 export const logIn = createAction(LOG_IN)
@@ -62,6 +63,12 @@ export const askForRoute = createAction(ASKFOROUTE, (from, to) => {
 })
 
 export const getRoute = createAction(GETROUTE, (route) => {
+    return {
+        payload: route
+    }
+})
+
+export const clearRoute = createAction(CLEARROUTE, (route) => {
     return {
         payload: route
     }

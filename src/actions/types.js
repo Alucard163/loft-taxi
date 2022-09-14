@@ -12,5 +12,6 @@ export const GETADDRESSES = 'GETADDRESSES'
 
 export const ASKFOROUTE = 'ASKFOROUTE'
 export const GETROUTE = 'GETROUTE'
+export const CLEARROUTE = 'CLEARROUTE'
 
 export const SET_LOADING = 'SET_LOADING'

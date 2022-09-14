@@ -12,6 +12,7 @@ import {
     updateCard,
     cardAdded,
     setLoading,
+    clearRoute,
 } from "./actions";
 import {
     LOG_IN,
@@ -27,6 +28,7 @@ import {
     ASKFORCARD,
     UPDATECARD,
     SET_LOADING,
+    CLEARROUTE,
 } from "./types";
 
 export {
@@ -55,5 +57,7 @@ export {
     ASKFOROUTE,
     GETROUTE,
     setLoading,
-    SET_LOADING
+    SET_LOADING,
+    CLEARROUTE,
+    clearRoute
 };
