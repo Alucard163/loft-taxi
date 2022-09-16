@@ -1,12 +1,12 @@
-import RegistrationPage from "./RegistrationPage";
-import { render, screen } from "@testing-library/react";
+import RegistrationPage from './RegistrationPage'
+import { render, screen } from '@testing-library/react'
 
-describe('Auth tests', () => {
-    it('renders correctly', () => {
-        render(<RegistrationPage />);
+describe('auth tests', () => {
+  it('renders correctly', () => {
+    render(<RegistrationPage />)
 
-        expect(screen.getByTestId('registration-page')).toBeInTheDocument();
-        expect(screen.getByTestId('aside-component')).toBeInTheDocument();
-        expect(screen.getByTestId('auth-component')).toBeInTheDocument();
-    })
+    expect(screen.getByTestId('registration-page')).toBeInTheDocument()
+    expect(screen.getByTestId('aside-component')).toBeInTheDocument()
+    expect(screen.getByTestId('auth-component')).toBeInTheDocument()
+  })
 })

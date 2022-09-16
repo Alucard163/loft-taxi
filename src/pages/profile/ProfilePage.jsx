@@ -1,28 +1,30 @@
-import React from "react";
-import Card from '@mui/material/Card';
-import { CardContent, TextField, Typography, Box, Stack } from "@mui/material";
-import { connect, useDispatch } from "react-redux";
-import CardImg from './img/Group 45.png';
-import {updateCard} from "../../actions";
-import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
+import React, { useCallback } from 'react'
+import Card from '@mui/material/Card'
+import { CardContent, TextField, Typography, Box, Stack } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { connect, useDispatch } from 'react-redux'
+import CardImg from './img/Group 45.png'
+import { updateCard } from '../../actions'
 
-import styles from './ProfilePage.module.css';
+import styles from './ProfilePage.module.css'
 
-function ProfilePage(props) {
-    const { isCardUpdated } = props;
-    const dispatch = useDispatch();
-    const handleSubmit = event => {
-        event.preventDefault();
-        const { cardName, cardNumber, cardDate, cardCvc } = event.target;
-        dispatch(updateCard(
-            cardName.value, cardNumber.value, cardDate.value, cardCvc.value
-        ))
-    }
+function ProfilePage (props) {
+  // eslint-disable-next-line react/prop-types
+  const { isCardUpdated } = props
+  const dispatch = useDispatch()
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault()
+    const { cardName, cardNumber, cardDate, cardCvc } = event.target
+    dispatch(updateCard(
+      cardName.value, cardNumber.value, cardDate.value, cardCvc.value
+    ))
+  }, [dispatch])
 
-    return (
+  return (
         <div data-testid="profile-page" className={styles.profile}>
-            {!isCardUpdated ?
-                <form onSubmit={handleSubmit}>
+            {!isCardUpdated
+              ? <form onSubmit={handleSubmit}>
                     <Card className={styles.card} sx={{ minWidth: 275, paddingX: 5, paddingY: 7 }}>
                         <CardContent>
                             <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
@@ -58,11 +60,8 @@ function ProfilePage(props) {
                             </Stack>
                         </CardContent>
                     </Card>
-            </form>
-
-                :
-
-                <Card sx={{ minWidth: 275, minHeight: 345 }}>
+                </form>
+              : <Card sx={{ minWidth: 275, minHeight: 345 }}>
                     <CardContent>
                         <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
                         <Typography fontSize='18px' align='center' gutterBottom >Ваши данные успешно обновлены!</Typography>
@@ -73,12 +72,12 @@ function ProfilePage(props) {
                             <Link to='/map' className={styles.button}>Перейти на карту</Link>
                         </Stack>
                     </CardContent>
-                </Card>}
+                </Card>
+            }
         </div>
-    )
+  )
 }
 
 export default connect(
-    (state) => ({ isCardUpdated: state.card.isCardUpdated }),
-    { updateCard })
-(ProfilePage);
+  (state) => ({ isCardUpdated: state.card.isCardUpdated }),
+  { updateCard })(ProfilePage)

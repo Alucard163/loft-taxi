@@ -1,3 +1,3 @@
-import CardWrap from "./CardWrap";
+import CardWrap from './CardWrap'
 
-export default CardWrap;
+export default CardWrap

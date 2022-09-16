@@ -1,4 +1,4 @@
-import { GETADDRESSES } from "../actions"
+import { GETADDRESSES } from '../actions'
 import { createReducer } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -7,12 +7,12 @@ const initialState = {
 
 const address = createReducer(initialState, (builder) => {
   builder
-      .addCase(GETADDRESSES, (state, action) => {
-        state.addresses = action.payload
-      })
-      .addDefaultCase((state, action) => {
-        return state
-      })
+    .addCase(GETADDRESSES, (state, action) => {
+      state.addresses = action.payload
+    })
+    .addDefaultCase((state) => {
+      return state
+    })
 })
 
 export default address

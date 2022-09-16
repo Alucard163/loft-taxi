@@ -1,12 +1,10 @@
-import MapBox from "./MapBox";
-import { render, screen } from "@testing-library/react";
+// import MapBox from './MapBox'
+// import { render } from '@testing-library/react'
 
 jest.mock('mapbox-gl/dist/mapbox-gl', () => ({
-    Map: () => ({})
-}));
+  Map: () => ({})
+}))
 
-describe('MapBox test', () => {
-    it.skip('should render correctly', () => {
-        const { container } = render(<MapBox />);
-    });
+describe('mapBox test', () => {
+  it.todo('should render correctly')
 })
