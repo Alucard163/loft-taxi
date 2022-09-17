@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
+import PropTypes from 'prop-types'
 import { connect, useDispatch } from 'react-redux'
 
 import Order from '../order'
@@ -15,7 +16,6 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || ''
 
 const MapBox = (props) => {
   const map = useRef(null)
-  // eslint-disable-next-line react/prop-types
   const { route } = props
   const mapContainer = useRef(null)
   const dispatch = useDispatch()
@@ -59,6 +59,10 @@ const MapBox = (props) => {
             <Order />
         </>
   )
+}
+
+MapBox.propsType = {
+  route: PropTypes.object
 }
 
 export default connect(

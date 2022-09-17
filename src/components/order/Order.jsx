@@ -13,7 +13,6 @@ import mercedes from './img/mercedes.png'
 import tesla from './img/tesla.png'
 
 function Order (props) {
-  // eslint-disable-next-line react/prop-types
   const { isCardUpdated, addresses } = props
   const dispatch = useDispatch()
 

@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import Card from '@mui/material/Card'
 import { CardContent, TextField, Typography, Box, Stack } from '@mui/material'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { connect, useDispatch } from 'react-redux'
 import CardImg from './img/Group 45.png'
 import { updateCard } from '../../actions'
@@ -10,7 +11,6 @@ import { updateCard } from '../../actions'
 import styles from './ProfilePage.module.css'
 
 function ProfilePage (props) {
-  // eslint-disable-next-line react/prop-types
   const { isCardUpdated } = props
   const dispatch = useDispatch()
   const handleSubmit = useCallback((event) => {
@@ -76,6 +76,10 @@ function ProfilePage (props) {
             }
         </div>
   )
+}
+
+ProfilePage.propsType = {
+  isCardUpdated: PropTypes.bool
 }
 
 export default connect(

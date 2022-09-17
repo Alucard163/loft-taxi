@@ -9,7 +9,6 @@ import { connect, useDispatch } from 'react-redux'
 import styles from './LoginForm.module.css'
 
 function LoginForm (props) {
-  // eslint-disable-next-line react/prop-types
   const { isLoggedIn, isLoading } = props
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')

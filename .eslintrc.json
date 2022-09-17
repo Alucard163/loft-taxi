@@ -19,5 +19,7 @@
     "parserOptions": {
         "sourceType": "module"
     },
-    "rules": {}
+    "rules": {
+        "react/prop-types": "off"
+    }
 }

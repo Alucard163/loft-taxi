@@ -10,7 +10,6 @@ import styles from './RegisterForm.module.css'
 import { Redirect } from 'react-router-dom'
 
 function RegisterForm (props, { useDispatchHook = useDispatch }) {
-  // eslint-disable-next-line react/prop-types
   const { isLoggedIn, isLoading } = props
   const dispatch = useDispatchHook()
   const [email, setEmail] = useState('')
