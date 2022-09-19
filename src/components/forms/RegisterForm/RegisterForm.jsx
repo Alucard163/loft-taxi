@@ -1,44 +1,45 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { connect, useDispatch } from "react-redux";
-import { register } from "../../../actions";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { connect, useDispatch } from 'react-redux'
+import { register } from '../../../actions'
 
-import { Box, Button, FormControl, Input, InputLabel } from '@mui/material';
+import { Box, Button, FormControl, Input, InputLabel } from '@mui/material'
 
-import styles from './RegisterForm.module.css';
-import { Redirect } from "react-router-dom";
+import styles from './RegisterForm.module.css'
+import { Redirect } from 'react-router-dom'
 
-function RegisterForm(props, {useDispatchHook=useDispatch}) {
-    const { isLoggedIn } = props;
-    const dispatch = useDispatchHook();
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [surname, setSurName] = useState('');
-    const [password, setPassword] = useState('');
+function RegisterForm (props, { useDispatchHook = useDispatch }) {
+  const { isLoggedIn, isLoading } = props
+  const dispatch = useDispatchHook()
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [surname, setSurName] = useState('')
+  const [password, setPassword] = useState('')
 
-    if (isLoggedIn) {
-        return <Redirect to='/map' />
-    }
+  if (isLoggedIn) {
+    return <Redirect to='/map' />
+  }
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        dispatch(register(email, password, name, surname));
-        handleReset();
-    };
+  const handleSubmit = event => {
+    event.preventDefault()
+    dispatch(register(email, password, name, surname))
+    handleReset()
+  }
 
-    const handleReset = e => {
-        setEmail('');
-        setPassword('');
-        setName('');
-        setSurName('');
-    }
+  const handleReset = e => {
+    setEmail('')
+    setPassword('')
+    setName('')
+    setSurName('')
+  }
 
-    const handleClick = () => {
-        dispatch(register(email, password, name, surname));
-        handleReset();
-    };
+  const handleClick = () => {
+    dispatch(register(email, password, name, surname))
+    handleReset()
+  }
 
-    return (
+  return (
         <Box
             component="form"
             name="RegisterForm"
@@ -78,7 +79,7 @@ function RegisterForm(props, {useDispatchHook=useDispatch}) {
                     required
                     className={styles.input}
                     value={name}
-                    onChange={e=> setName(e.target.value)}
+                    onChange={e => setName(e.target.value)}
                 />
             </FormControl>
             <FormControl
@@ -96,7 +97,7 @@ function RegisterForm(props, {useDispatchHook=useDispatch}) {
                     required
                     className={styles.input}
                     value={surname}
-                    onChange={e=> setSurName(e.target.value)}
+                    onChange={e => setSurName(e.target.value)}
                 />
             </FormControl>
             <FormControl
@@ -118,20 +119,33 @@ function RegisterForm(props, {useDispatchHook=useDispatch}) {
                 />
             </FormControl>
             <div className={`${styles.formItem} ${styles.submit}`}>
-                <Button fullWidth className={styles.input} onClick={() => handleClick()} >
-                    Зарегистрироваться
-                </Button>
+                {isLoading
+                  ? (
+                    <Button fullWidth className={styles.input} disabled>
+                        Загрузка...
+                    </Button>
+                    )
+                  : (
+                    <Button fullWidth className={styles.input} onClick={handleClick} >
+                        Зарегистрироваться
+                    </Button>
+                    )}
+
             </div>
         </Box>
-    );
+  )
 }
 
 RegisterForm.propsType = {
-    isLoggedIn: PropTypes.bool,
-    register: PropTypes.func
+  isLoggedIn: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  register: PropTypes.func
 }
 
 export const RegisterFormWithAuth = connect(
-    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
-    { register }
-) (RegisterForm);
+  (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    isLoading: state.loading.isLoading
+  }),
+  { register }
+)(RegisterForm)

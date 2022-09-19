@@ -1,41 +1,74 @@
-import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line no-unused-vars
+import React, { useRef, useEffect, useState } from 'react'
+import mapboxgl from 'mapbox-gl'
+import PropTypes from 'prop-types'
+import { connect, useDispatch } from 'react-redux'
 
-import { mapboxData } from "../../utils/constants/mapbox";
+import Order from '../order'
+import { askForAddress, askForRoute, askForCard, clearRoute } from '../../actions'
 
-import styles from './MapBox.module.css';
+import { drawRoute } from '../../utils/drawRoute'
+import { mapboxData } from '../../utils/constants/mapbox'
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
+import styles from './MapBox.module.css'
 
-const MapBox = () => {
-    const mapContainer = useRef(null);
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || ''
 
-    const [lng, setLng] = useState(mapboxData.lng);
-    const [lat, setLat] = useState(mapboxData.lat);
-    const [zoom, setZoom] = useState(mapboxData.zoom);
+const MapBox = (props) => {
+  const map = useRef(null)
+  const { route } = props
+  const mapContainer = useRef(null)
+  const dispatch = useDispatch()
+  const [lng, setLng] = useState(mapboxData.lng)
+  const [lat, setLat] = useState(mapboxData.lat)
+  const [zoom, setZoom] = useState(mapboxData.zoom)
 
-    useEffect(() => {
-        const map = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: mapboxData.style,
-            center: [lng, lat],
-            zoom: zoom
-        });
+  useEffect(() => {
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: mapboxData.style,
+      center: [lng, lat],
+      zoom
+    })
+    dispatch(askForCard())
+    dispatch(askForAddress())
 
-        map.on('move', () => {
-            setLng(map.getCenter().lng.toFixed(4));
-            setLat(map.getCenter().lat.toFixed(4));
-            setZoom(map.getZoom().toFixed(2));
-        });
+    map.current.on('move', () => {
+      setLng(map.current.getCenter().lng.toFixed(4))
+      setLat(map.current.getCenter().lat.toFixed(4))
+      setZoom(map.current.getZoom().toFixed(2))
+    })
 
-        // Clean up on unmount
-        return () => map.remove();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    return (
+    // Clean up on unmount
+    return () => {
+      map.current.remove()
+      dispatch(clearRoute(route))
+    }
+  }, [])
+
+  useEffect(() => {
+    // eslint-disable-next-line react/prop-types
+    if (route.length !== 0) {
+      drawRoute(map, route)
+    }
+  }, [route])
+
+  return (
         <>
             <div data-testid="mapbox-container" ref={mapContainer} className={styles.map} />
+            <Order />
         </>
-    );
-};
+  )
+}
 
-export default MapBox;
+MapBox.propsType = {
+  route: PropTypes.object
+}
+
+export default connect(
+  (state) => ({
+    isCardUpdated: state.card.isCardUpdated,
+    addresses: state.address.addresses,
+    route: state.route.route
+  }),
+  { askForAddress, askForRoute, askForCard, clearRoute })(MapBox)

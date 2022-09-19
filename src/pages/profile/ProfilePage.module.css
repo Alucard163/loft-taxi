@@ -8,3 +8,43 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.button {
+    padding: 18px 90px;
+    background: #D8D7D5;
+    border-color: #FDBF5A;
+    color: #000000;
+    border-radius: 70px;
+    text-transform: none;
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 29px;
+    border-style: none;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #FDBF5A;
+    transition: background 0.4s;
+}
+
+.button:active {
+    background: #FFA842;
+    transition: background 0.4s;
+}
+
+.header {
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 42px;
+    color: #000000;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+}

@@ -1,13 +1,14 @@
-import rootReducer from '../reducers';
-import { configureStore } from "@reduxjs/toolkit";
-import { regMiddleware, authMiddleware } from '../middlewares/authMiddleware';
+import rootReducer from '../reducers'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import createSagaMiddleware from 'redux-saga'
+import { rootSaga } from '../saga'
 
+const saga = createSagaMiddleware()
 export const store = configureStore({
-        reducer: rootReducer,
-        middleware: [regMiddleware, authMiddleware],
-        devTools: true,
+  reducer: rootReducer,
+  middleware: [...getDefaultMiddleware({ thunk: false }), saga],
+  devTools: true
 })
 
-store.subscribe(() => {
-    localStorage['token'] = JSON.stringify(store.getState());
-});
+// eslint-disable-next-line jest/require-hook
+saga.run(rootSaga)

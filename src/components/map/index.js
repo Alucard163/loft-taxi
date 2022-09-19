@@ -1,3 +1,3 @@
-import MapBox from "./MapBox";
+import MapBox from './MapBox'
 
-export default MapBox;
+export default MapBox
