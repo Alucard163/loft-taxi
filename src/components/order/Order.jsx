@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useCallback } from 'react'
 import { connect, useDispatch } from 'react-redux'
-import { TextField, Autocomplete, Link, Card, CardContent } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { TextField, Autocomplete, Card, CardContent } from '@mui/material'
 
 import CardWrap from '../common/CardWrap'
 import { askForAddress, askForRoute } from '../../actions'
@@ -69,7 +70,7 @@ function Order (props) {
             </div>
         </form>
       : <Card className={styles.content}>
-            <CardContent>
+            <CardContent sx={{ padding: 3 }}>
                 <h1 className={styles.error}>Ошибка карты</h1>
                 <h5 className={styles.error_info}>Введите платёжные данные</h5>
                 <Link to='/profile'>Перейти в профиль</Link>
