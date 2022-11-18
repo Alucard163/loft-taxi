@@ -1,67 +1,23 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useCallback } from 'react'
+import React from 'react'
 import Card from '@mui/material/Card'
-import { CardContent, TextField, Typography, Box, Stack } from '@mui/material'
+import { CardContent, Typography, Stack } from '@mui/material'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { connect, useDispatch } from 'react-redux'
-import CardImg from './img/Group 45.png'
+import { connect } from 'react-redux'
 import { updateCard } from '../../actions'
 
+import ProfileForm from '../../components/forms/ProfileForm'
 import styles from './ProfilePage.module.css'
 
 function ProfilePage (props) {
   const { isCardUpdated } = props
-  const dispatch = useDispatch()
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault()
-    const { cardName, cardNumber, cardDate, cardCvc } = event.target
-    dispatch(updateCard(
-      cardName.value, cardNumber.value, cardDate.value, cardCvc.value
-    ))
-  }, [dispatch])
 
   return (
         <div data-testid="profile-page" className={styles.profile}>
             {!isCardUpdated
-              ? <form onSubmit={handleSubmit}>
-                    <Card className={styles.card} sx={{ minWidth: 275, paddingX: 5, paddingY: 7 }}>
-                        <CardContent>
-                            <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
-                            <Typography fontSize='18px' align='center' gutterBottom >Введите платежные данные</Typography>
-                            <Stack
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center"
-                                spacing={8}
-                            >
-                                <Box sx={{ width: 355 }}>
-                                    <TextField id="standard-basic" label="Имя владельца" variant="standard" name="cardName" fullWidth />
-                                    <TextField id="standard-basic" label="Номер карты" variant="standard" name="cardNumber" fullWidth />
-                                    <Stack
-                                        direction="row"
-                                        justifyContent="center"
-                                        alignItems="center"
-                                        spacing={4}
-                                    >
-                                        <TextField id="standard-basic" label="MM/YY" name="cardDate" variant="standard" />
-                                        <TextField id="standard-basic" label="CVC" name="cardCvc" variant="standard" />
-                                    </Stack>
-                                </Box>
-                                <Box>
-                                    <img src={CardImg} alt="Card" />
-                                </Box>
-                            </Stack>
-                            <Stack
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                <input type="submit" value="Сохранить" className={styles.button} />
-                            </Stack>
-                        </CardContent>
-                    </Card>
-                </form>
-              : <Card sx={{ minWidth: 275, minHeight: 345 }}>
+              ? <ProfileForm />
+              : <Card sx={{ minWidth: 275, minHeight: 'auto' }}>
                     <CardContent>
                         <Typography fontSize='36px' align='center' className={styles.header}>Профиль</Typography>
                         <Typography fontSize='18px' align='center' gutterBottom >Ваши данные успешно обновлены!</Typography>
